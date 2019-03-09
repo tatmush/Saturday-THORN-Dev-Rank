@@ -16,7 +16,7 @@ login.addEventListener('click', e => {
 
 	//sign in
 	const promise = auth.signInWithEmailAndPassword(email, pass);
-	promise.catch(e => console.log(e.message));
+	promise.catch(e => alert('Try again' + e.message));
 	
 });
 
@@ -27,7 +27,7 @@ signUp.addEventListener('click', e => {
 
 	//sign in
 	const promise = auth.createUserWithEmailAndPassword(email, pass);
-	promise.catch(e => console.log(e.message));
+	promise.catch(e => alert('Try again' + e.message));
 
 });
 
@@ -43,6 +43,11 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 	if(firebaseUser){
 		console.log(firebaseUser);
 		document.getElementById('logout').style.visibility = 'visible';
+		firebase.auth().currentUser.getIdToken(true).then(function(idToken){
+			console.log(idToken);
+		}).catch(function(error){
+			alert('Something went wrong');
+		});
 	}
 	else{
 		console.log('Not logged in');
