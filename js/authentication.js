@@ -21,7 +21,6 @@ login.addEventListener('click', e => {
 });
 
 signUp.addEventListener('click', e => {
-	console.log('123');
 	const email = getInputVal('email');
 	const pass = getInputVal('password');
 	const auth = firebase.auth();
@@ -31,6 +30,10 @@ signUp.addEventListener('click', e => {
 	promise.catch(e => console.log(e.message));
 
 });
+
+logout.addEventListener('click', e => {
+	firebase.auth().signOut();
+})
 //get form values
 function getInputVal(id){
 	return document.getElementById(id).value;
@@ -39,9 +42,11 @@ function getInputVal(id){
 firebase.auth().onAuthStateChanged(firebaseUser => {
 	if(firebaseUser){
 		console.log(firebaseUser);
+		document.getElementById('logout').style.visibility = 'visible';
 	}
 	else{
 		console.log('Not logged in');
+		document.getElementById('logout').style.visibility = 'hidden';
 	}
 });
 
