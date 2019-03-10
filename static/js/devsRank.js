@@ -31,14 +31,13 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 	else{
 		//window.location.href = './login';
 		console.log('Not logged in');
+
 		//document.getElementById('logout').style.visibility = 'hidden';
 	}
 });
 //---------------------------------------------------LOGIN
-var hasLoad = false;
 
 if (document.URL.includes("login")){
-	if (!hasLoad){
 	
 	hasLoad = true;
 
@@ -73,7 +72,7 @@ logout.addEventListener('click', e => {
 function getInputVal(id){
 	return document.getElementById(id).value;
 }
-}
+
 }
 
 //--------------------------------------------------futureHackathon
