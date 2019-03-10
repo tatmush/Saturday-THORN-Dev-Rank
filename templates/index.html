@@ -1,21 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8"/>
-	<title>Home</title>
-
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-	<h1 class="center-text">Dev Rank</h1>
-	<h3 class="center-text">Helping you hack the perfect hackathon</h3>
-	<h6>Hackathon</h6>
+{% extends "base.html" %}
+{% block content %}
 	<div class="center-div">
 		<a href="{{ url_for('ranking') }}">Ranking</a><br>
 		<a href="hackathon.html">Hackerthon</a><br>
 		<a href="{{ url_for('hostAhackathon') }}">Host a hackerthon</a>
 		
 	</div>
-
-</body>
-</html>
+{% endblock %}

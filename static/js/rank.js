@@ -26,8 +26,24 @@ function renderUser(doc){
 	devsList.appendChild(li);
 }
 
-db.collection('user').get().then((snapshot) => {
+db.collection('user').orderBy('points', 'desc').get().then((snapshot) => {
 	snapshot.docs.forEach(doc => {
 		renderUser(doc);
 	})
 });
+
+db.collection('user').orderBy('points', 'desc').onSnapshot(snapshot => {
+	let changes = snapshot.docChanges();
+	changes.forEach(change => {
+		if(change.type =='modified'){
+			renderUser(change.doc);
+		}
+		else if(change.type == 'added'){
+			renderUser(change.doc);
+		}
+		else if(change.type == "removed"){
+			let li = devsList.querySelector('[data-id=' + change.doc.id + ']');
+			devsList.removeChild(li);
+		}
+	})
+})

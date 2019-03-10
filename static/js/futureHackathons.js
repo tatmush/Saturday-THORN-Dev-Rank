@@ -1,4 +1,4 @@
-var config = {
+/*var config = {
 apiKey: "AIzaSyAZG4f0TJr1ANc8NaTkf3NnqSPiO4VzC_U",
 authDomain: "dev-rank.firebaseapp.com",
 databaseURL: "https://dev-rank.firebaseio.com",
@@ -6,8 +6,7 @@ projectId: "dev-rank",
 storageBucket: "dev-rank.appspot.com",
 messagingSenderId: "754047455655"
 };
-firebase.initializeApp(config);
-
+firebase.initializeApp(config);*/
 var token = '';
 const db = firebase.firestore();
 const devsList = document.querySelector('#devsList');
@@ -28,7 +27,7 @@ function renderUser(doc){
 	venue.textContent = doc.data().venue;
 	date.textContent = doc.data().date;
 	description.textContent = doc.data().description;
-	cross.textContent = 'x';
+	cross.textContent = 'cancel';
 
 	//li.appendChild(eventName);
 	li.appendChild(title);
@@ -37,6 +36,11 @@ function renderUser(doc){
 	//li.appendChild(description);
 	li.appendChild(cross);
 	devsList.appendChild(li);
+
+	cross.addEventListener('click', (e) => {
+		//cancelEvent(e);
+	})
+	
 }
 
 db.collection('events').get().then((snapshot) => {
@@ -44,3 +48,11 @@ db.collection('events').get().then((snapshot) => {
 		renderUser(doc);
 	})
 });
+
+function cancelEvent(){
+	e.stopPropagation();
+	let id = e.target.parentElement.getAttribute('data-id');
+	db.collection('events').doc('id').update({
+		state: "cancelled"
+	});
+}

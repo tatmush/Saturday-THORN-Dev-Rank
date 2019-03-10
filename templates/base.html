@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	{% if title %}
+	<title>{{ title }} - Devs Rank</title>
+	{% else %}
+	<title>Devs Rank</title>
+	{% endif %}
+	<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase-auth.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/devsList.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+	<div>
+		<span><a href="{{ url_for('login') }}">Login</a></span>
+		<span><a href="{{ url_for('ranking') }}">Ranking</a></span>
+		<span><a href="{{ url_for('hostAhackathon') }}">Host A Hackathon</a></span>
+		<span><a href="{{ url_for('futureHackathons') }}">View Hackathon</a></span>
+		<hr>
+		<h1 class="center-text">Dev Rank</h1>
+		<h3 class="center-text">Helping you hack the perfect hackathon</h3>
+	</div>
+	{% block content %}{% endblock %}
+	<script type="text/javascript" src="{{ url_for('static', filename='js/devsRank.js') }}"></script>
+</body>
+</html>
