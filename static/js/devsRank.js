@@ -174,12 +174,6 @@ function renderUser(doc){
 	devsList.appendChild(li);
 }
 
-db.collection('user').orderBy('points', 'desc').get().then((snapshot) => {
-	snapshot.docs.forEach(doc => {
-		renderUser(doc);
-	})
-});
-
 db.collection('user').orderBy('points', 'desc').onSnapshot(snapshot => {
 	let changes = snapshot.docChanges();
 	changes.forEach(change => {
