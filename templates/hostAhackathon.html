@@ -3,29 +3,31 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>Home</title>
-
-	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase-auth.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 	<h1 class="center-text">Dev Rank</h1>
 	<h3 class="center-text">Helping you hack the perfect hackathon</h3>
 	<h6>Hackathon</h6>
 	<div class="center-div">
-		<form>
+		<form id="addHackathon">
 			<label>Name of Event</label>
 			<input type="text" name="eventName" id="eventName"><br>
-			<label>Banner</label>
-			<input type="text" name="banner" id="banner"><br>
+			<label>Title</label>
+			<input type="text" name="title" id="title"><br>
 			<label>Venue</label>
 			<input type="text" name="venue" id="venue"><br>
 			<label>Date</label>
 			<input type="text" name="date" id="date"><br>
 			<label>Description</label>
-			<textarea rows="10" cols="50"></textarea>
-			<button type="submit">Submit</button>
+			<textarea id="description" rows="10" cols="50"></textarea>
+			<button id="addHackathonButton" type="Submit">Submit</button>
 		</form>
 		
 	</div>
-
+<script type="text/javascript" src="{{ url_for('static', filename='js/host.js') }}"></script>
 </body>
 </html>

@@ -5,18 +5,17 @@
 	<title>Home</title>
 	<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.8.6/firebase-auth.js"></script>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/devsList.css') }}">
-	<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"> -->
 </head>
 <body>
 	<h1 class="center-text">Dev Rank</h1>
 	<h3 class="center-text">Helping you hack the perfect hackathon</h3>
-	<h6>Developers list</h6>
-	<div class="content">
-		<form id="add-cafe-form"></form>
+	<h6>Hackathon</h6>
+	<div class="center-div">
 		<ul id="devsList"></ul>
+		
 	</div>
-	
-<script type="text/javascript" src="{{ url_for('static', filename='js/rank.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/futureHackathons.js') }}"></script>
 </body>
 </html>
