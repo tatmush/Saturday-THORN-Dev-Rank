@@ -44,7 +44,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 		console.log(firebaseUser);
 		document.getElementById('logout').style.visibility = 'visible';
 		firebase.auth().currentUser.getIdToken(true).then(function(idToken){
-			window.location.href = './index.html';
+			window.location.href = './index';
 			console.log(idToken);
 		}).catch(function(error){
 			alert('Something went wrong');
