@@ -43,7 +43,7 @@ function renderUser(doc){
 	
 }
 
-db.collection('events').onSnapshot(snapshot => {
+db.collection('events').orderBy('datetime', 'desc').onSnapshot(snapshot => {
 	let changes = snapshot.docChanges();
 	changes.forEach(change => {
 		if(change.type =='added'){

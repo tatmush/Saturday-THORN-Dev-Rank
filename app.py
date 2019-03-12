@@ -1,24 +1,14 @@
 from flask import Flask, render_template, request, jsonify
-from flask_login import LoginManager, current_user, login_user, login_required, logout_user, UserMixin
 import firebase_admin
 from firebase_admin import credentials, auth
-import user
 
 app = Flask(__name__)
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return uid
 
 @app.route("/")
 @app.route("/login")
 def login():
 	return render_template("login.html")
 
-@login_required
 @app.route("/index")
 def index():
 	return render_template("index.html")

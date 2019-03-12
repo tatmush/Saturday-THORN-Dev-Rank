@@ -6,19 +6,25 @@ projectId: "dev-rank",
 storageBucket: "dev-rank.appspot.com",
 messagingSenderId: "754047455655"
 };
-firebase.initializeApp(config);
+if(!firebase.apps.length){
+	firebase.initializeApp(config);
+}
 
 var token = '';
-const db = firebase.firestore();
+//const db = firebase.firestore();
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
 	if(firebaseUser){
-
+		token = firebaseUser.uid;
 	}
 	else{
-		console.log('Not logged in');
+		//disable submit button
 		document.getElementById("addHackathonButton").disabled = true;
 		document.getElementById("addHackathonButton").style.backgroundColor = "gray";
+		//hide logout button
+		console.log('Not logged in');
+		document.getElementById('logout').style.visibility = 'hidden';
+		
 	}
 });
 
@@ -27,6 +33,7 @@ const hackathonForm = document.querySelector('#addHackathon');
 //saving data
 hackathonForm.addEventListener('submit', (e) => {
 	e.preventDefault();
+	console.log(token);
 	db.collection('events').add({
 		organizer: token,
 		eventName: hackathonForm.eventName.value,
