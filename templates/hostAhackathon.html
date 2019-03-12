@@ -2,18 +2,15 @@
 {% block content %}
 	<div class="center-div">
 		<form id="addHackathon">
-			<label>Name of Event</label>
-			<input type="text" name="eventName" id="eventName"><br>
-			<label>Title</label>
-			<input type="text" name="title" id="title"><br>
-			<label>Venue</label>
-			<input type="text" name="venue" id="venue"><br>
-			<label>Date</label>
-			<input type="text" name="date" id="date"><br>
-			<label>Description</label>
-			<textarea id="description" rows="10" cols="50"></textarea>
+			<input type="text" name="eventName" id="eventName" placeholder="Event Name e.g Saturday THORNS"><br>
+			<input type="text" name="title" id="title" placeholder="Title of the event e.g DevRank"><br>
+			<input type="text" name="venue" id="venue" placeholder="address or popular name"><br>
+			<input type="date" name="date" id="date"><br>
+			<input type="time" name="time" id="time">
+			<textarea id="description" rows="10" cols="50" placeholder="description and any other relevant info"></textarea>
 			<button id="addHackathonButton" type="Submit">Submit</button>
 		</form>
 		
 	</div>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/host.js') }}"></script>
 {% endblock %}

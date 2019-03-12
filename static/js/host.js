@@ -13,17 +13,12 @@ const db = firebase.firestore();
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
 	if(firebaseUser){
-		//console.log(firebaseUser);
-		firebase.auth().currentUser.getIdToken(true).then(function(idToken){
-			token = idToken;
-			console.log(token);
-		}).catch(function(error){
-			//alert('Something went wrong');
-			console.log(error);
-		});
+
 	}
 	else{
 		console.log('Not logged in');
+		document.getElementById("addHackathonButton").disabled = true;
+		document.getElementById("addHackathonButton").style.backgroundColor = "gray";
 	}
 });
 
@@ -37,13 +32,16 @@ hackathonForm.addEventListener('submit', (e) => {
 		eventName: hackathonForm.eventName.value,
 		title: hackathonForm.title.value,
 		venue: hackathonForm.venue.value,
-		date: hackathonForm.date.value,
+		datetime: firebase.firestore.Timestamp.fromDate(new Date(hackathonForm.date.value + " " + hackathonForm.time.value)),
 		description: hackathonForm.description.value
 	});
 	hackathonForm.eventName.value = '';
 	hackathonForm.title.value = '';
 	hackathonForm.venue.value = '';
 	hackathonForm.date.value = '';
+	time: hackathonForm.time.value = '',
 	hackathonForm.description.value = '';
 
-})
+	alert("You have successfully created an event");
+
+});

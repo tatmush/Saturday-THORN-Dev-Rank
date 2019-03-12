@@ -1,13 +1,13 @@
-/*var config = {
-apiKey: "AIzaSyAZG4f0TJr1ANc8NaTkf3NnqSPiO4VzC_U",
-authDomain: "dev-rank.firebaseapp.com",
-databaseURL: "https://dev-rank.firebaseio.com",
-projectId: "dev-rank",
-storageBucket: "dev-rank.appspot.com",
-messagingSenderId: "754047455655"
+
+var config = {
+	apiKey: "AIzaSyAZG4f0TJr1ANc8NaTkf3NnqSPiO4VzC_U",
+	authDomain: "dev-rank.firebaseapp.com",
+	databaseURL: "https://dev-rank.firebaseio.com",
+	projectId: "dev-rank",
+	storageBucket: "dev-rank.appspot.com",
+	messagingSenderId: "754047455655"
 };
-firebase.initializeApp(config);*/
-var token = '';
+firebase.initializeApp(config);
 const db = firebase.firestore();
 const devsList = document.querySelector('#devsList');
 
@@ -38,21 +38,54 @@ function renderUser(doc){
 	devsList.appendChild(li);
 
 	cross.addEventListener('click', (e) => {
-		//cancelEvent(e);
+		cancelEvent(e);
 	})
 	
 }
 
-db.collection('events').get().then((snapshot) => {
-	snapshot.docs.forEach(doc => {
-		renderUser(doc);
+db.collection('events').onSnapshot(snapshot => {
+	let changes = snapshot.docChanges();
+	changes.forEach(change => {
+		if(change.type =='added'){
+			renderUser(change.doc);
+		}
+		else if(change.type == 'removed') {
+			let li = devsList.querySelector('[data-id=' + change.doc.id + ']');
+			devsList.removeChild(li);
+		}
 	})
 });
 
-function cancelEvent(){
+function cancelEvent(e){
 	e.stopPropagation();
-	let id = e.target.parentElement.getAttribute('data-id');
-	db.collection('events').doc('id').update({
-		state: "cancelled"
+
+	firebase.auth().onAuthStateChanged(firebaseUser => {
+	if(firebaseUser){
+		let id = e.target.parentElement.getAttribute('data-id');
+	firebase.auth().onAuthStateChanged(firebaseUser => {
+		var event = db.collection("events").doc(id);
+		event.get().then(function(doc) {
+    		if (doc.exists) {
+    			if(firebaseUser.uid == doc.data().organizer){
+					db.collection('events').doc(id).delete();
+				}
+				else{
+					console.log('Cannot delete document');
+				}
+    		} else {
+        		// doc.data() will be undefined in this case
+        		console.log("No such document!");
+    		}}).catch(function(error) {
+    			console.log("Error getting document:", error);
+			});
+		
 	});
+		token = firebaseUser.uid;
+	}
+	else{
+		alert('Not logged in');
+	}
+});
+
+	
 }
