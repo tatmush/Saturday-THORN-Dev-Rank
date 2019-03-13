@@ -3,7 +3,7 @@ body {
 }
 /* center the login div */
 .center-div{
-  position: absolute;
+  position: block;
   margin: auto;
   top: 0;
   right: 0;
@@ -15,7 +15,7 @@ body {
 }
 
 .center-div-fut{
-  position: absolute;
+  position: block;
   margin: auto;
   top: 0;
   right: 0;
