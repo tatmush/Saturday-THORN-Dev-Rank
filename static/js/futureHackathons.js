@@ -24,11 +24,11 @@ function renderUser(doc){
 	li.setAttribute('data-id', doc.id);
 	eventName.textContent = doc.data().eventName;
 	title.textContent = doc.data().title;
-	venue.textContent = doc.data().venue;
-	date.textContent = doc.data().date;
+	venue.textContent = doc.data().venue; 
 	description.textContent = doc.data().description;
 	cross.textContent = 'cancel';
-
+	date.textContent = doc.data().datetime.toDate();
+	
 	//li.appendChild(eventName);
 	li.appendChild(title);
 	//li.appendChild(venue);

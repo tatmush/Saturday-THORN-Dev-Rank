@@ -36,6 +36,16 @@ signUp.addEventListener('click', e => {
 	const promise = auth.createUserWithEmailAndPassword(email, pass);
 	promise.catch(e => alert('Try again' + e.message));
 
+	db.collection("user").add({
+		username: "",
+		email: email,
+		points: 0
+	}).then(function(docRef){
+		console.log("user created")
+	}).catch(function(error){
+		console.error(error);
+	});
+
 });
 
 //get form values

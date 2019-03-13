@@ -55,7 +55,6 @@ li div{
     top: 0;
     right: 0px;
     background: rgba(255,255,255,0.6);
-    width: 40px;
     text-align: center;
     padding: 10px 0;
     font-weight:  bold;
@@ -65,10 +64,10 @@ li div{
 form input{
     float: left;
     width: 100%;
-    margin: 0;
+    margin: 5px;
     border: 0;
-    border-bottom: 1px solid #eee;
-    margin: 0 1%;
+    border-radius: 10px;
+    border-bottom: 10px solid #eee;
     padding: 10px;
     display: block;
     box-sizing: border-box;
@@ -99,4 +98,5 @@ button{
     font-family: ubuntu;
     letter-spacing: 1px;
     color: #999;
+    margin: 5px;
 }

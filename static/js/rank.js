@@ -14,14 +14,17 @@ const devsList = document.querySelector('#devsList');
 //create element and render user
 function renderUser(doc){
 	let li = document.createElement('li');
-	let name = document.createElement('span');
+	let username = document.createElement('span');
+	let email = document.createElement('span');
 	let points = document.createElement('span');
-
+	console.log(doc);
 	li.setAttribute('data-id', doc.id);
-	name.textContent = doc.data().username;
+	username.textContent = doc.data().username;
+	email.textContent = doc.data().email;
 	points.textContent = doc.data().points;
 
-	li.appendChild(name);
+	li.appendChild(username);
+	li.appendChild(email);
 	li.appendChild(points);
 	devsList.appendChild(li);
 }
