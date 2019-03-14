@@ -12,8 +12,4 @@ class firebase():
 	def __init__(self):
 		super(firebase, self).__init__()
 		
-	
-	def awardPointsToPerson(self, person):
-		docs = self.db.collection("user").where(u'username', u'==', person).get()
-		for doc in docs:
-			print(doc.id)
+
