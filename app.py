@@ -24,6 +24,10 @@ def ranking():
 def hostAhackathon():
 	return render_template("hostAhackathon.html")
 
+@app.route("/profile")
+def profile():
+	return render_template("profile.html")
+
 @app.route("/futureHackathons")
 def futureHackathons():
 	return render_template("futureHackathons.html")
