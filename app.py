@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from graphQLAPI import graphQL
 #import firebase_admin
 #from firebase_admin import credentials, auth
 
@@ -15,6 +16,8 @@ def index():
 
 @app.route("/ranking")
 def ranking():
+	g = graphQL()
+	print(g.getClosedIssuesActors())
 	return render_template("ranking.html")
 
 @app.route("/hostAhackathon")
