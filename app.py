@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify
 from graphQLAPI import graphQL
-from firebase import firebase
 
 app = Flask(__name__)
 
@@ -39,8 +38,6 @@ def futureHackathons():
 def verifyUser():
 	content = request.json
 	token = content['idToken']
-	#decoded_token = auth.verify_id_token(token);
-	#uid = decoded_token['uid']
 	return ""
  
 if __name__ == "__main__":
