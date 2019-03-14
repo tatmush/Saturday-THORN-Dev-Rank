@@ -24,7 +24,7 @@ updateUsername.addEventListener('click', e =>{
 				console.log("Update done");
 			})
 			.catch(function(error){
-			console.error(error);
+				console.error(error);
 			}); 
 		});
 	}).catch(function(error){

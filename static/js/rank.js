@@ -17,22 +17,34 @@ function renderUser(doc){
 	let username = document.createElement('span');
 	let email = document.createElement('span');
 	let points = document.createElement('span');
-	console.log(doc);
+
 	li.setAttribute('data-id', doc.id);
 	username.textContent = doc.data().username;
 	email.textContent = doc.data().email;
 	points.textContent = doc.data().points;
 
+	const listFromGithub = document.getElementById("listFromGitHub").getElementsByTagName("li"); 
+	for(let i = 0; i < listFromGithub.length; i++){
+		//console.log(listFromGithub[i].textContent);
+		//console.log(username);
+		if (listFromGithub[i].textContent == doc.data().username){
+			updateBackend(doc.data().username);
+		}
+	}
+
+	//add list elements to list
 	li.appendChild(username);
 	li.appendChild(email);
 	li.appendChild(points);
 	devsList.appendChild(li);
 }
 
+
 db.collection('user').orderBy('points', 'desc').onSnapshot(snapshot => {
 	let changes = snapshot.docChanges();
 	changes.forEach(change => {
 		if(change.type =='modified'){
+			devsList.innerHTL='';
 			renderUser(change.doc);
 		}
 		else if(change.type == 'added'){
@@ -43,4 +55,29 @@ db.collection('user').orderBy('points', 'desc').onSnapshot(snapshot => {
 			devsList.removeChild(li);
 		}
 	})
-})
+});
+
+//update backend
+function updateBackend(username){
+	db.collection("user").where("username", "==", username).get().then(function (querySnapshot) {
+		querySnapshot.forEach(function (doc){
+			var ref = db.collection("user").doc(doc.id);
+			return ref.update({
+				points: 20
+			})
+			.then(function(){
+				console.log("Update done");
+			})
+			.catch(function(error){
+				console.error(error);
+			}); 
+		});
+	}).catch(function(error){
+		console.log("There was an error!" + error);
+	});
+
+}
+
+function removeUser(doc){
+
+}

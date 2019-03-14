@@ -20,12 +20,8 @@ def ranking():
 	listOfPeople = graphQLObj.getClosedIssuesActors()
 	#iterate through the list of people who closed issues and award points
 	fb = firebase()
-	for person in listOfPeople:
-		#{**dict, person: 10}
-		#update the comments in the firebase collection
-		fb.awardPointsToPerson(person)
-	
-	return render_template("ranking.html")
+	numberOfPeople=len(listOfPeople)
+	return render_template("ranking.html", listOfPeople=listOfPeople, numberOfPeople=numberOfPeople)
 
 @app.route("/hostAhackathon")
 def hostAhackathon():

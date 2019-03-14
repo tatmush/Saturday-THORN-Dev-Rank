@@ -4,8 +4,8 @@ from firebase_admin import firestore
 
 class firebase():
 
-	cred = credentials.Certificate("static/js/dev-rank-91513719ea6a.json")
-	firebase_admin.initialize_app(cred)
+	cred = credentials.Certificate("./serviceAccount.json")
+	default_app = firebase_admin.initialize_app(cred)
 	db = firestore.client()
 
 	"""docstring for firebase"""
