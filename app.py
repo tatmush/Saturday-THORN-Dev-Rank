@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from graphQLAPI import graphQL
-#import firebase_admin
-#from firebase_admin import credentials, auth
+from firebase import firebase
 
 app = Flask(__name__)
 
@@ -16,8 +15,16 @@ def index():
 
 @app.route("/ranking")
 def ranking():
-	g = graphQL()
-	print(g.getClosedIssuesActors())
+	#get a list of people from github
+	graphQLObj = graphQL()
+	listOfPeople = graphQLObj.getClosedIssuesActors()
+	#iterate through the list of people who closed issues and award points
+	fb = firebase()
+	for person in listOfPeople:
+		#{**dict, person: 10}
+		#update the comments in the firebase collection
+		fb.awardPointsToPerson(person)
+	
 	return render_template("ranking.html")
 
 @app.route("/hostAhackathon")

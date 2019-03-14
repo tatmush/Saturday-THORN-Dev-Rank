@@ -2,7 +2,7 @@ import requests
 
 class graphQL:
 
-	headers = {"Authorization": "token 3eda0d95123de3153d38513a4680d59ab6d0da39"}
+	headers = {"Authorization": "token e0dc3f2e5fae0008d58284055fefdda727b5c227"}
 
 	"""docstring for graphQL"""
 	def __init__(self):
@@ -17,6 +17,7 @@ class graphQL:
 
 		
 	def getClosedIssuesActors(self):
+		listOfNames = []
 		query = """
 				query { 
 					repository(owner: "tatmush", name: "Saturday-THORN-Dev-Rank"){
@@ -50,5 +51,6 @@ class graphQL:
 			node1 = node["node"]["timeline"]["edges"]
 			for innerNode in node1:
 				if(innerNode["node"]["__typename"] == "ClosedEvent"):
-					listOfNames = innerNode["node"]["actor"]["login"]
-					return listOfNames
+					name = innerNode["node"]["actor"]["login"]
+					listOfNames.append(name)
+		return listOfNames
