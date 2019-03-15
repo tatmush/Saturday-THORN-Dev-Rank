@@ -18,7 +18,7 @@ def ranking():
 	graphQLObj = graphQL()
 	listOfPeople = graphQLObj.getClosedIssuesActors()
 	#iterate through the list of people who closed issues and award points
-	fb = firebase()
+	#fb = firebase()
 	numberOfPeople=len(listOfPeople)
 	return render_template("ranking.html", listOfPeople=listOfPeople, numberOfPeople=numberOfPeople)
 
