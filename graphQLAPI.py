@@ -2,7 +2,7 @@ import requests
 
 class graphQL:
 
-	headers = {"Authorization": "token 86b158f223e338c3c67265a48c0a8fb02b4b835a"}
+	headers = {"Authorization": ""}
 
 	"""docstring for graphQL"""
 	def __init__(self):
