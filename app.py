@@ -30,6 +30,27 @@ def hostAhackathon():
 def profile():
 	return render_template("profile.html")
 
+@app.route("/checkRepo")
+def checkRepo():
+	dictOfPeople = {}
+	return render_template("contribs.html", dictOfPeople=dictOfPeople)
+
+
+@app.route("/contrib", methods=['POST', 'GET'])
+def contrib():
+
+	if request.method =="POST":
+		repoOwner = request.form['repoOwner']
+		repoName = request.form['repoName']
+	else:
+		repoOwner = request.form['repoOwner']
+		repoName = request.form['repoName']
+	print(repoOwner)
+	print(repoName)
+	graphQLObj = graphQL()
+	dictOfPeople = graphQLObj.getContributors(repoOwner, repoName)
+	return render_template("contribs.html", dictOfPeople=dictOfPeople)
+
 @app.route("/futureHackathons")
 def futureHackathons():
 	return render_template("futureHackathons.html")

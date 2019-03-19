@@ -2,38 +2,37 @@ import requests
 
 class graphQL:
 
-	headers = {"Authorization": ""}
+	headers = {"Authorization": "token 17512c2d5902693c99f1d4d27ed74f4f626e6809"}
 
 	"""docstring for graphQL"""
 	def __init__(self):
 		super(graphQL, self).__init__()
 
-	def run_query(self, query): # A simple function to use requests.post to make the API call. Note the json= section.
-		request = requests.post('https://api.github.com/graphql', json={'query': query}, headers=self.headers)
+	def run_query(self, query, variables): # A simple function to use requests.post to make the API call. Note the json= section.
+		request = requests.post('https://api.github.com/graphql', json={'query': query, 'variables': variables}, headers=self.headers)
 		if request.status_code == 200:
 			return request.json()
 		else:
 			raise Exception("Query failed to run by returning code of {}. {}".format(request.status_code, query))
+	
 
-		
+
 	def getClosedIssuesActors(self):
 		listOfNames = []
-		query = """
-				query { 
-					repository(owner: "tatmush", name: "Saturday-THORN-Dev-Rank"){
-					  issues(states: CLOSED,first:100){
-						edges{
-						  node{
-							... on Issue{
-							  timeline(last: 100){
-								edges{
-								  node{
-									__typename
-									... on ClosedEvent{
-									  actor{
-										login
-									  }
-									}
+		query = '''
+			query($owner: String!, $name: String!) { 
+				repository(owner: $owner, name: $name){
+				  issues(states: CLOSED, first:100){
+					edges{
+					  node{
+						... on Issue{
+						  timeline(last: 1){
+							edges{
+							  node{
+								__typename
+								... on ClosedEvent{
+								  actor{
+									login
 								  }
 								}
 							  }
@@ -42,10 +41,17 @@ class graphQL:
 						}
 					  }
 					}
+				  }
 				}
-				"""
-
-		result = self.run_query(query) #execute query
+			}'''
+		variables = {
+  			"owner": "tatmush",
+  			"name": "Saturday-THORN-Dev-Rank"
+		}	
+			
+		print(query)
+		result = self.run_query(query, variables) #execute query
+		print(result)
 		a = result["data"]["repository"]["issues"]["edges"]
 		for node in a:
 			node1 = node["node"]["timeline"]["edges"]
@@ -54,3 +60,55 @@ class graphQL:
 					name = innerNode["node"]["actor"]["login"]
 					listOfNames.append(name)
 		return listOfNames
+
+	def getContributors(self, repoOwner, repoName):
+		listOfNames = []
+		query = '''
+			query($owner: String!, $name: String!) { 
+				repository(owner: $owner, name: $name){
+				  issues(states: CLOSED, first:100){
+					edges{
+					  node{
+						... on Issue{
+						  timeline(last: 1){
+							edges{
+							  node{
+								__typename
+								... on ClosedEvent{
+								  actor{
+									login
+								  }
+								}
+							  }
+							}
+						  }
+						}
+					  }
+					}
+				  }
+				}
+			}'''
+		variables = {
+				"owner": repoOwner,
+				"name": repoName
+		}	
+			
+		result = self.run_query(query, variables) #execute query
+		print(result)
+		a = result["data"]["repository"]["issues"]["edges"]
+		for node in a:
+			node1 = node["node"]["timeline"]["edges"]
+			for innerNode in node1:
+				if(innerNode["node"]["__typename"] == "ClosedEvent"):
+					name = innerNode["node"]["actor"]["login"]
+					listOfNames.append(name)
+		return self.dictOfContribs(listOfNames)
+
+	def dictOfContribs(self, listOfNames):
+		dictOfContribs = {}
+		for person in listOfNames:
+			if person in dictOfContribs:
+				dictOfContribs[person]+=1
+			else:
+				dictOfContribs[person] = 1
+		return dictOfContribs
