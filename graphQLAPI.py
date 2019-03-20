@@ -63,20 +63,24 @@ class graphQL:
 
 	def getContributors(self, repoOwner, repoName):
 		listOfNames = []
-		query = '''
-			query($owner: String!, $name: String!) { 
-				repository(owner: $owner, name: $name){
-				  issues(states: CLOSED, first:100){
-					edges{
-					  node{
-						... on Issue{
-						  timeline(last: 1){
-							edges{
-							  node{
-								__typename
-								... on ClosedEvent{
-								  actor{
-									login
+		noError = True
+		while noError:
+			query = '''
+				query($owner: String!, $name: String!) { 
+					repository(owner: $owner, name: $name){
+					  issues(states: CLOSED, first:100){
+						edges{
+						  node{
+							... on Issue{
+							  timeline(last: 1){
+								edges{
+								  node{
+									__typename
+									... on ClosedEvent{
+									  actor{
+										login
+									  }
+									} 
 								  }
 								}
 							  }
@@ -85,24 +89,34 @@ class graphQL:
 						}
 					  }
 					}
-				  }
-				}
-			}'''
-		variables = {
-				"owner": repoOwner,
-				"name": repoName
-		}	
-			
-		result = self.run_query(query, variables) #execute query
-		print(result)
-		a = result["data"]["repository"]["issues"]["edges"]
-		for node in a:
-			node1 = node["node"]["timeline"]["edges"]
-			for innerNode in node1:
-				if(innerNode["node"]["__typename"] == "ClosedEvent"):
-					name = innerNode["node"]["actor"]["login"]
-					listOfNames.append(name)
-		return self.dictOfContribs(listOfNames)
+				}'''
+			variables = {
+					"owner": repoOwner,
+					"name": repoName
+			}	
+				
+			result = self.run_query(query, variables) #execute query
+			print(result)
+			try:
+				a = result["data"]["repository"]["issues"]["edges"]
+				for node in a:
+				node1 = node["node"]["timeline"]["edges"]
+				for innerNode in node1:
+					if(innerNode["node"]["__typename"] == "ClosedEvent"):
+						name = innerNode["node"]["actor"]["login"]
+						listOfNames.append(name)
+
+			except Exception as error:
+				noError = False
+				print(error) #access token related error
+
+			#except: #timeout/limit related errors
+
+			#except: #any other error
+
+			finally:
+				return self.dictOfContribs(listOfNames)
+
 
 	def dictOfContribs(self, listOfNames):
 		dictOfContribs = {}
