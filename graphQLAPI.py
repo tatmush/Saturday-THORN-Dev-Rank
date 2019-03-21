@@ -1,9 +1,10 @@
 import requests
 from collections import OrderedDict
+import operator
 
 class graphQL:
 
-	headers = {"Authorization": "token 17512c2d5902693c99f1d4d27ed74f4f626e6809"}
+	headers = {"Authorization": "token bcd4dfaef8a197d367a07bfbddf879833ab0398d"}
 
 	"""docstring for graphQL"""
 	def __init__(self):
@@ -122,5 +123,5 @@ class graphQL:
 				dictOfContribs[person]+=1
 			else:
 				dictOfContribs[person] = 1
-		ordDict = dict(OrderedDict(sorted(dictOfContribs.items(), key = lambda t:t[1])))
-		return ordDict
+
+		return OrderedDict(sorted(dictOfContribs.items(), key=lambda t: t[1], reverse=True))

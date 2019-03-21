@@ -12,7 +12,7 @@
 	<div>
 		<ul id="contribList">
 		{% for (person, points) in dictOfPeople.items() %}
-		<li id="{{ person }}">{{ person + "\t" }} <span id="{{ points}}">{{ points }}</span></li>
+		<li id="{{ person }}">{{ person }} <span id="{{ points}}">{{ points }}</span></li>
 		{% endfor %}
 		</ul>
 	</div>
