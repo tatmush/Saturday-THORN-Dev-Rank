@@ -12,7 +12,7 @@ if(!firebase.apps.length){
 	firebase.initializeApp(config);
 }
 //getting the database instance
-const db = firebase.firestore();
+//const db = firebase.firestore();
 
 //user tokenID
 var userId = '';

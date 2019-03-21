@@ -4,5 +4,12 @@
 		<form id="add-cafe-form"></form>
 		<ul id="devsList"></ul>
 	</div>
+	<div>
+		<ul id="listFromGitHub">
+		{% for person in listOfPeople %}
+		<li id="{{ person }}">{{ person }}</li>
+		{% endfor %}
+		</ul>
+	</div>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/rank.js') }}"></script>
 {% endblock %}

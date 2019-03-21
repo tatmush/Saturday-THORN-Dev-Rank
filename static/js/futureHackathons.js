@@ -34,6 +34,8 @@ function renderUser(doc){
 	//li.appendChild(venue);
 	li.appendChild(date);
 	//li.appendChild(description);
+
+
 	li.appendChild(cross);
 	devsList.appendChild(li);
 
@@ -70,11 +72,11 @@ function cancelEvent(e){
 					db.collection('events').doc(id).delete();
 				}
 				else{
-					console.log('Cannot delete document');
+					alert('Cannot delete document');
 				}
     		} else {
         		// doc.data() will be undefined in this case
-        		console.log("No such document!");
+        		alert("No such document!");
     		}}).catch(function(error) {
     			console.log("Error getting document:", error);
 			});

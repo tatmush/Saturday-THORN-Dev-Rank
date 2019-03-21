@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class="center-div">
+		<form>
+			<input type="text" name="githubUsername" id="githubUsername" placeholder="Enter your github username" required>
+			<button type="button" id="updateUsername">Submit</button>
+		</form>
+
+		<div>
+			<label>username:</label>
+			<span id="username"></span><br>
+			<label>email</label>
+			<span id="email"></span>
+		</div>
+		
+		
+	</div>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/profile.js') }}"></script>
+{% endblock %}

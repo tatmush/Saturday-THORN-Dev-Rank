@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+	<div class="content">
+		<form id="checkContributors" action="{{ url_for('contrib') }}" method="POST">
+			<input type="text" name="repoOwner" id="repoOwner" placeholder="Repository Owner">
+			<input type="text" name="repoName" id="repoName" placeholder="Repository Name">
+			<button type="Submit">Submit</button>
+		</form>
+		<!-- <ul id="contribList"></ul> -->
+	</div>
+	<div>
+		<ul id="contribList">
+		{% for (person, points) in dictOfPeople.items() %}
+		<li id="{{ person }}">{{ person }} <span id="{{ points}}">{{ points }}</span></li>
+		{% endfor %}
+		</ul>
+	</div>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/rank.js') }}"></script>
+{% endblock %}

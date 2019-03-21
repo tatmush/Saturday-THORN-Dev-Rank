@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-#import firebase_admin
-#from firebase_admin import credentials, auth
+from graphQLAPI import graphQL
 
 app = Flask(__name__)
 
@@ -15,11 +14,40 @@ def index():
 
 @app.route("/ranking")
 def ranking():
-	return render_template("ranking.html")
+	#get a list of people from github
+	graphQLObj = graphQL()
+	listOfPeople = graphQLObj.getClosedIssuesActors()
+	#iterate through the list of people who closed issues and award points
+	#fb = firebase()
+	numberOfPeople=len(listOfPeople)
+	return render_template("ranking.html", listOfPeople=listOfPeople, numberOfPeople=numberOfPeople)
 
 @app.route("/hostAhackathon")
 def hostAhackathon():
 	return render_template("hostAhackathon.html")
+
+@app.route("/profile")
+def profile():
+	return render_template("profile.html")
+
+@app.route("/checkRepo")
+def checkRepo():
+	dictOfPeople = {}
+	return render_template("contribs.html", dictOfPeople=dictOfPeople)
+
+
+@app.route("/contrib", methods=['POST', 'GET'])
+def contrib():
+
+	if request.method =="POST":
+		repoOwner = request.form['repoOwner']
+		repoName = request.form['repoName']
+	else:
+		repoOwner = request.form['repoOwner']
+		repoName = request.form['repoName']
+	graphQLObj = graphQL()
+	dictOfPeople = graphQLObj.getContributors(repoOwner, repoName)
+	return render_template("contribs.html", dictOfPeople=dictOfPeople)
 
 @app.route("/futureHackathons")
 def futureHackathons():
@@ -29,8 +57,6 @@ def futureHackathons():
 def verifyUser():
 	content = request.json
 	token = content['idToken']
-	#decoded_token = auth.verify_id_token(token);
-	#uid = decoded_token['uid']
 	return ""
  
 if __name__ == "__main__":

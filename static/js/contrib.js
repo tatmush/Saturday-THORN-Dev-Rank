@@ -77,7 +77,3 @@ function updateBackend(username){
 	});
 
 }
-
-function removeUser(doc){
-
-}
