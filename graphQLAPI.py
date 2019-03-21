@@ -1,4 +1,5 @@
 import requests
+from collections import OrderedDict
 
 class graphQL:
 
@@ -12,6 +13,8 @@ class graphQL:
 		request = requests.post('https://api.github.com/graphql', json={'query': query, 'variables': variables}, headers=self.headers)
 		if request.status_code == 200:
 			return request.json()
+		elif request.status_code == 401:
+			raise Exception("Error!, Check your access token if it is valid or correct")
 		else:
 			raise Exception("Query failed to run by returning code of {}. {}".format(request.status_code, query))
 	
@@ -49,7 +52,6 @@ class graphQL:
   			"name": "Saturday-THORN-Dev-Rank"
 		}	
 			
-		print(query)
 		result = self.run_query(query, variables) #execute query
 		print(result)
 		a = result["data"]["repository"]["issues"]["edges"]
@@ -96,23 +98,18 @@ class graphQL:
 			}	
 				
 			result = self.run_query(query, variables) #execute query
-			print(result)
 			try:
 				a = result["data"]["repository"]["issues"]["edges"]
 				for node in a:
-				node1 = node["node"]["timeline"]["edges"]
-				for innerNode in node1:
-					if(innerNode["node"]["__typename"] == "ClosedEvent"):
-						name = innerNode["node"]["actor"]["login"]
-						listOfNames.append(name)
+					node1 = node["node"]["timeline"]["edges"]
+					for innerNode in node1:
+						if(innerNode["node"]["__typename"] == "ClosedEvent"):
+							name = innerNode["node"]["actor"]["login"]
+							listOfNames.append(name)
 
+			#wrong arguemnts exception
 			except Exception as error:
-				noError = False
-				print(error) #access token related error
-
-			#except: #timeout/limit related errors
-
-			#except: #any other error
+				print("There was an error in fetching data. Check if the repository owner and name is correct. Full error here: {}".format(error))
 
 			finally:
 				return self.dictOfContribs(listOfNames)
@@ -125,4 +122,5 @@ class graphQL:
 				dictOfContribs[person]+=1
 			else:
 				dictOfContribs[person] = 1
-		return dictOfContribs
+		ordDict = dict(OrderedDict(sorted(dictOfContribs.items(), key = lambda t:t[1])))
+		return ordDict

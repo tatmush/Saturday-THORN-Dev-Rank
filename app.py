@@ -45,8 +45,6 @@ def contrib():
 	else:
 		repoOwner = request.form['repoOwner']
 		repoName = request.form['repoName']
-	print(repoOwner)
-	print(repoName)
 	graphQLObj = graphQL()
 	dictOfPeople = graphQLObj.getContributors(repoOwner, repoName)
 	return render_template("contribs.html", dictOfPeople=dictOfPeople)
