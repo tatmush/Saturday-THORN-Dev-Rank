@@ -1,4 +1,4 @@
-var config = {
+const config = {
 apiKey: "AIzaSyAZG4f0TJr1ANc8NaTkf3NnqSPiO4VzC_U",
 authDomain: "dev-rank.firebaseapp.com",
 databaseURL: "https://dev-rank.firebaseio.com",
@@ -11,7 +11,7 @@ if(!firebase.apps.length){
 }
 
 var token = '';
-//const db = firebase.firestore();
+const db = firebase.firestore();
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
 	if(firebaseUser){
@@ -33,7 +33,6 @@ const hackathonForm = document.querySelector('#addHackathon');
 //saving data
 hackathonForm.addEventListener('submit', (e) => {
 	e.preventDefault();
-	console.log(token);
 	db.collection('events').add({
 		organizer: token,
 		eventName: hackathonForm.eventName.value,

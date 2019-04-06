@@ -81,6 +81,32 @@ form input:focus{
     transition: all ease 0.2s;
 }
 
+form textarea{
+    float: left;
+    width: 100%;
+    margin: 5px;
+    border: 0;
+    border-radius: 10px;
+    border-bottom: 10px solid #eee;
+    padding: 10px;
+    display: block;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+
+form textarea:focus{
+    float: left;
+    width: 100%;
+    margin: 5px;
+    border: 0;
+    border-radius: 10px;
+    border-bottom: 10px solid #eee;
+    padding: 10px;
+    display: block;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+
 form:after{
     content: '';
     clear: both;

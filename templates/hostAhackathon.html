@@ -1,16 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
-	<div class="center-div">
+	<div class="center-div" style="width: 500px;">
 		<form id="addHackathon">
-			<input type="text" name="eventName" id="eventName" placeholder="Event Name e.g Saturday THORNS"><br>
-			<input type="text" name="title" id="title" placeholder="Title of the event e.g DevRank"><br>
-			<input type="text" name="venue" id="venue" placeholder="address or popular name"><br>
-			<input type="date" name="date" id="date"><br>
-			<input type="time" name="time" id="time">
-			<textarea id="description" rows="10" cols="50" placeholder="description and any other relevant info"></textarea>
+			<input type="text" name="eventName" id="eventName" placeholder="Event Name e.g Saturday THORNS" required><br>
+			<input type="text" name="title" id="title" placeholder="Title of the event e.g DevRank" required><br>
+			<input type="text" name="venue" id="venue" placeholder="address or popular name" required><br>
+			<input type="date" name="date" id="date"  min= required><br>
+			<input type="time" name="time" id="time" required>
+			<textarea id="description" rows="10" cols="50" placeholder="description and any other relevant info" required></textarea>
 			<button id="addHackathonButton" type="Submit">Submit</button>
 		</form>
 		
 	</div>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/host.js') }}"></script>
+	<script type="text/javascript">
+		var today = new Date().toISOString().split('T')[0];
+		document.getElementsByName("date")[0].setAttribute('min', today);
+	</script>
 {% endblock %}

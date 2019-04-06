@@ -1,5 +1,5 @@
 
-var config = {
+const config = {
 	apiKey: "AIzaSyAZG4f0TJr1ANc8NaTkf3NnqSPiO4VzC_U",
 	authDomain: "dev-rank.firebaseapp.com",
 	databaseURL: "https://dev-rank.firebaseio.com",
@@ -7,23 +7,25 @@ var config = {
 	storageBucket: "dev-rank.appspot.com",
 	messagingSenderId: "754047455655"
 };
-//firebase.initializeApp(config);
+firebase.initializeApp(config);
+const db = firebase.firestore();
 
+//login
 login.addEventListener('click', e => {
 	const email = getInputVal('email');
 	const pass = getInputVal('password');
 	const auth = firebase.auth();
 
-	console.log("login button clicked!");
 	const promise = auth.signInWithEmailAndPassword(email, pass);
+	//on successful login
 	promise.then(function(){
 		firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
   		// Send token to your backend via HTTPS
 		window.location.href = './index';
-		});
-	promise.catch(e => alert('Try again' + e.message));
-	
+		});	
 	});
+	//catching an error
+	promise.catch(e => alert(e.message));
 });
 
 //sign up
@@ -31,15 +33,15 @@ signUp.addEventListener('click', e => {
 	const email = getInputVal('email');
 	const pass = getInputVal('password');
 	const auth = firebase.auth();
+	const points = 0;
 
-	console.log("signup button clicked");
 	const promise = auth.createUserWithEmailAndPassword(email, pass);
-	promise.catch(e => alert('Try again' + e.message));
+	promise.catch(e => alert(e.message));
 
 	db.collection("user").add({
 		username: "",
 		email: email,
-		points: 0
+		points: points
 	}).then(function(docRef){
 		console.log("user created")
 	}).catch(function(error){
