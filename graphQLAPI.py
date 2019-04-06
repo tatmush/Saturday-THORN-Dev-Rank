@@ -4,7 +4,7 @@ import operator
 
 class graphQL:
 
-	headers = {"Authorization": "token bcd4dfaef8a197d367a07bfbddf879833ab0398d"}
+	headers = {"Authorization": "token "}
 
 	"""docstring for graphQL"""
 	def __init__(self):
